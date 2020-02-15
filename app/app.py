@@ -3,8 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user01:user01@rdb/development'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config.from_object('app.config.DevelopmentConfig')
 db = SQLAlchemy(app)
 Migrate(app, db)
 
