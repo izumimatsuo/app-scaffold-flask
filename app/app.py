@@ -4,13 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user01:user01@rdb/test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user01:user01@rdb/development'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 Migrate(app, db)
 
 
-# Model
+# Models
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -29,6 +29,7 @@ class User(db.Model):
         return '<User {}>'.format(self.name)
 
 
+# views
 @app.route("/api/v1/users", methods=['GET', 'POST'])
 def api_v1_users():
     if request.method == 'POST':
@@ -43,14 +44,10 @@ def api_v1_users():
         return jsonify(ls), 200
 
 
-@app.route("/api/v1/users/<id>", methods=['GET', 'DELETE'])
-def api_v1_users_id(id):
+@app.route("/api/v1/users/<id>", methods=['DELETE'])
+def api_v1_users_by_id(id):
     if request.method == 'DELETE':
         d = User.query.get(id)
         db.session.delete(d)
         db.session.commit()
         return '', 204
-    if request.method == 'GET':
-        d = User.query.get(id)
-        d = d.to_dict()
-        return jsonify(d), 200

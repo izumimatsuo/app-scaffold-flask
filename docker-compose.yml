@@ -30,7 +30,7 @@ services:
     environment:
       - POSTGRES_USER=user01
       - POSTGRES_PASSWORD=user01
-      - POSTGRES_DB=test
+      - POSTGRES_DB=development
     volumes:
       - database:/var/lib/postgresql/data
     networks:
