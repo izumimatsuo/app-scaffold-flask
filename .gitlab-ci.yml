@@ -1,0 +1,30 @@
+image: python:3
+
+services:
+  - name: postgres:9
+    alias: rdb
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache"
+  POSTGRES_USER: user01
+  POSTGRES_PASSWORD: user01
+  POSTGRES_DB: development
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .cache/
+
+stages:
+  - test
+  - package
+  - deploy
+
+test:
+  stage: test
+  script:
+    - pip install --upgrade pip
+    - pip install pytest pytest-flake8 pytest-cov
+    - pip install  -r requirements.txt
+    - FLASK_APP=run flask db upgrade
+    - pytest -v --flake8 --cov=app

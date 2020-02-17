@@ -62,3 +62,7 @@ curl localhost/izumi/api/v1/models
 ```
 curl -X DELETE localhost/izumi/api/v1/models/1
 ```
+## gitlab-runner
+```
+gitlab-runner exec docker test
+```
