@@ -6,7 +6,10 @@ networks:
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        - HTTPS_PROXY=${HTTPS_PROXY}
     expose:
       - 5000
     volumes:
@@ -16,6 +19,7 @@ services:
       - TZ=Asia/Tokyo
       - FLASK_APP=run.py
       - FLASK_ENV=development
+      - HTTPS_PROXY=${HTTPS_PROXY}
     command: flask run --host 0.0.0.0
     labels:
       - "traefik.enable=true"
