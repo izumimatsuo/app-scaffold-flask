@@ -2,24 +2,22 @@ import os
 
 
 class BaseConfig(object):
-    DEBUG = False
-    TESTING = False
-
-
-class DevelopmentConfig(BaseConfig):
-    DEBUG = True
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://{user}:{password}@{host}/{database}'.format(
-        **{
-          'user': os.getenv('DB_USER', 'user01'),
-          'password': os.getenv('DB_PASSWORD', 'user01'),
-          'host': os.getenv('DB_HOST', 'rdb'),
-          'database': os.getenv('DB_DATABASE', 'development'),
-        })
+    DATABASE_URI = os.getenv('DATABASE_URI', 'postgresql://user01:user01@rdb/production')
+    SQLALCHEMY_DATABASE_URI = DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
 
+class ProductionConfig(BaseConfig):
+    DEBUG = False
+    TESTING = False
+
+
 class TestingConfig(BaseConfig):
     DEBUG = False
+    TESTING = True
+
+
+class DevelopmentConfig(BaseConfig):
+    DEBUG = True
     TESTING = True

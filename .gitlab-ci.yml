@@ -8,7 +8,7 @@ variables:
   POSTGRES_USER: user01
   POSTGRES_PASSWORD: user01
   POSTGRES_DB: development
-  DB_HOST: postgres
+  DATABASE_URI: "postgresql://user01:user01@postgres/development"
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
