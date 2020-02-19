@@ -19,11 +19,6 @@ $ docker-compose -p $USER down
 $ docker-compose -p $USER exec app pip install <package-name>
 ```
 
-パッケージ反映
-```
-$ docker-compose -p $USER exec app pip freeze >requirements.txt
-```
-
 データベース接続
 ```
 $ docker-compose -p $USER exec rdb psql -U <user-name> <database-name>
@@ -33,34 +28,34 @@ $ docker-compose -p $USER exec rdb psql -U <user-name> <database-name>
 
 初期化
 ```
-flask db init
+$ docker-compose -p $USER exec app flask db init
 ```
 マイグレーション作成
 ```
-flask db migrate
+$ docker-compose -p $USER exec app flask db migrate
 ```
 マイグレーション実行
 ```
-flask db upgrade
+$ docker-compose -p $USER exec app flask db upgrade
 ```
 ロールバック
 ```
-flask db downgrade
+$ docker-compose -p $USER exec app flask db downgrade
 ```
 
 ## test
 
 登録
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"name":"momo-taro"}' localhost/izumi/api/v1/models
+curl -X POST -H "Content-Type: application/json" -d '{"name":"momo-taro"}' localhost/${USER}/api/v1/users
 ```
 参照
 ```
-curl localhost/izumi/api/v1/models
+curl localhost/${USER}/api/v1/users
 ```
 削除
 ```
-curl -X DELETE localhost/izumi/api/v1/models/1
+curl -X DELETE localhost/${USER}/api/v1/users/1
 ```
 ## gitlab-runner
 ```
