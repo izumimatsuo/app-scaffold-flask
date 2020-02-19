@@ -1,4 +1,4 @@
-from app.app import app, db
+from app.user import app
 from flask import json
 
 
