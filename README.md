@@ -1,8 +1,19 @@
 # web-scaffold-flask
 
-Python Flask で Web アプリケーションを開発する際の土台
+Python Flask で Web アプリケーションを docker 環境で開発する際の土台
 
-## commands
+## Tutorial
+```
+# 環境起動
+$ docker-compose -p $USER up -d
+
+# マイグレーション実行
+$ docker-compose -p $USER exec app flask db upgrade
+
+# pytest
+$ docker-compose -p $USER exec app pytest -v --flake8 --cov=app --cov-report=term-missing
+```
+## Commands
 
 環境起動
 ```
@@ -24,7 +35,7 @@ $ docker-compose -p $USER exec app pip install <package-name>
 $ docker-compose -p $USER exec rdb psql -U <user-name> <database-name>
 ```
 
-## Migrate
+## DB Migrate
 
 初期化
 ```
@@ -43,21 +54,25 @@ $ docker-compose -p $USER exec app flask db upgrade
 $ docker-compose -p $USER exec app flask db downgrade
 ```
 
-## test
+## Test
 
 登録
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"name":"momo-taro"}' localhost/${USER}/api/v1/users
+$ curl -X POST -H "Content-Type: application/json" -d '{"name":"momo-taro"}' localhost/${USER}/api/v1/users
 ```
 参照
 ```
-curl localhost/${USER}/api/v1/users
+$ curl localhost/${USER}/api/v1/users
 ```
 削除
 ```
-curl -X DELETE localhost/${USER}/api/v1/users/1
+$ curl -X DELETE localhost/${USER}/api/v1/users/1
 ```
-## gitlab-runner
+pytest
 ```
-gitlab-runner exec docker test
+$ docker-compose -p $USER exec app pytest -v --flake8 --cov=app --cov-report=term-missing
+```
+gitlab-runner
+```
+$ gitlab-runner exec docker test
 ```
