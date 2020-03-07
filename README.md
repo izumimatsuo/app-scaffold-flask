@@ -1,4 +1,4 @@
-# web-scaffold-flask
+# app-scaffold-flask
 
 Python Flask で Web アプリケーションを docker 環境で開発する際の土台
 
